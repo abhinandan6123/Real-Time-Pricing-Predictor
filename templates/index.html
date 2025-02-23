@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Real-Time Pricing Predictor</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .container {
+            max-width: 600px;
+            margin-top: 50px;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 15px rgba(0,0,0,0.1);
+        }
+        .title {
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        .btn-predict {
+            width: 100%;
+        }
+        #result {
+            font-size: 20px;
+            font-weight: bold;
+            text-align: center;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="title">Real-Time Pricing Predictor</div>
+        
+        <form id="predictForm">
+            <div class="mb-3">
+                <label class="form-label">Pickup Latitude</label>
+                <input type="text" class="form-control" id="pickup_lat" required>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Pickup Longitude</label>
+                <input type="text" class="form-control" id="pickup_long" required>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Dropoff Latitude</label>
+                <input type="text" class="form-control" id="drop_lat" required>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Dropoff Longitude</label>
+                <input type="text" class="form-control" id="drop_long" required>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Delivery Distance (km)</label>
+                <input type="number" class="form-control" id="distance" required>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Package Weight (kg)</label>
+                <input type="number" class="form-control" id="weight" required>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Time of Day</label>
+                <select class="form-control" id="time_of_day" required>
+                    <option value="morning">Morning</option>
+                    <option value="afternoon">Afternoon</option>
+                    <option value="evening">Evening</option>
+                    <option value="night">Night</option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary btn-predict">Predict Price</button>
+        </form>
+        
+        <div id="result"></div>
+    </div>
+    
+    <script>
+        $(document).ready(function() {
+            $("#predictForm").on("submit", function(event) {
+                event.preventDefault();
+                let formData = {
+                    pickup_lat: $("#pickup_lat").val(),
+                    pickup_long: $("#pickup_long").val(),
+                    drop_lat: $("#drop_lat").val(),
+                    drop_long: $("#drop_long").val(),
+                    distance: $("#distance").val(),
+                    weight: $("#weight").val(),
+                    time_of_day: $("#time_of_day").val()
+                };
+                
+                $.ajax({
+                    type: "POST",
+                    url: "/predict",
+                    contentType: "application/json",
+                    data: JSON.stringify(formData),
+                    success: function(response) {
+                        $("#result").html("Predicted Price: ₹" + response.predicted_price);
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
+
+
+
+
+
+
