@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Real-Time Pricing Predictor</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #121212;
+            color: white;
+            text-align: center;
+            padding: 30px;
+        }
+        h1 {
+            color: #00c6ff;
+        }
+        form {
+            background: #1e1e1e;
+            padding: 20px;
+            border-radius: 10px;
+            display: inline-block;
+        }
+        label {
+            display: block;
+            margin: 10px 0;
+        }
+        input {
+            padding: 10px;
+            width: 80%;
+            margin-bottom: 15px;
+            border-radius: 5px;
+            border: none;
+        }
+        button {
+            background: #00c6ff;
+            color: black;
+            padding: 10px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        button:hover {
+            background: #0094cc;
+        }
+        .result {
+            margin-top: 20px;
+            font-size: 24px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>Real-Time Ride Price Predictor</h1>
+    
+    <form method="POST">
+        <label>Pickup Datetime:</label>
+        <input type="datetime-local" name="pickup_datetime" required>
+
+        <label>Pickup Longitude:</label>
+        <input type="text" name="pickup_longitude" required>
+
+        <label>Pickup Latitude:</label>
+        <input type="text" name="pickup_latitude" required>
+
+        <label>Dropoff Longitude:</label>
+        <input type="text" name="dropoff_longitude" required>
+
+        <label>Dropoff Latitude:</label>
+        <input type="text" name="dropoff_latitude" required>
+
+        <label>Passenger Count:</label>
+        <input type="number" name="passenger_count" min="1" required>
+
+        <button type="submit">Predict Price</button>
+    </form>
+
+    {% if prediction is not none %}
+        <div class="result">Predicted Price: ${{ prediction }}</div>
+    {% endif %}
+</body>
+</html>
