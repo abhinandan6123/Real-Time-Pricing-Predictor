@@ -129,4 +129,3 @@ Aspiring Machine Learning Engineer
 
 ---
 
-Let me know if you want this in markdown file format or with GitHub-style badges and a screenshot preview at the top!
